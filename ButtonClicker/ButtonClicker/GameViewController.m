@@ -22,6 +22,7 @@
 #import "MPManager.h"
 #import "ButtonClickerPlayer.h"
 
+@import CoreMotion;
 @import SceneKit;
 
 @interface GameViewController () <MPGameDelegate> {
@@ -39,6 +40,10 @@
 @property (weak, nonatomic) IBOutlet UIView *scoreBG3;
 @property (weak, nonatomic) IBOutlet UIView *scoreBG4;
 @property (weak, nonatomic) IBOutlet SCNView* sceneView;
+
+@property (strong) CMMotionManager* manager;
+@property (strong) NSOperationQueue* queue;
+@property (strong) CMDeviceMotionHandler handler;
 
 @end
 
@@ -200,7 +205,8 @@
         [voltronNode addChildNode:node];
     }
     [scene.rootNode addChildNode:voltronNode];
-    voltronNode.position = SCNVector3Make(voltronNode.position.x - 50, voltronNode.position.y, voltronNode.position.z);
+    // negative on x moves right, positive moves left
+    voltronNode.position = SCNVector3Make(voltronNode.position.x - 0, voltronNode.position.y, voltronNode.position.z);
     
     SCNCamera* camera = [SCNCamera camera];
     camera.usesOrthographicProjection = true;
@@ -220,6 +226,22 @@
     arm.eulerAngles = SCNVector3Make(arm.eulerAngles.x, arm.eulerAngles.y + M_PI, arm.eulerAngles.z);
     
     self.sceneView.scene = scene;
+    
+    self.manager = [[CMMotionManager alloc] init];
+    self.queue = [[NSOperationQueue alloc] init];
+    self.manager.deviceMotionUpdateInterval = 0.05;
+    self.handler = ^ (CMDeviceMotion* motion, NSError* error) {
+//        NSLog(@"%f %f %f", motion.rotationRate.x, motion.rotationRate.y, motion.rotationRate.z);
+        NSLog(@"%f %f %f", motion.attitude.roll, motion.attitude.pitch, motion.attitude.yaw);
+        if (fabs(M_PI + motion.attitude.yaw * 4 - cameraOrbit.eulerAngles.y) < 1e-3) {
+//            return;
+        }
+        cameraOrbit.eulerAngles = SCNVector3Make(cameraOrbit.eulerAngles.x, M_PI + motion.attitude.roll * 2, cameraOrbit.eulerAngles.z);
+//        cameraOrbit.eulerAngles.y += motion.rotationRate.y
+    };
+    [self.manager startDeviceMotionUpdatesToQueue:self.queue withHandler:self.handler];
+    
+    
     [self.sceneView play:nil];
 }
 

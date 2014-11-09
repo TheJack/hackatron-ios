@@ -271,7 +271,7 @@
                                     <action selector="leaveButtonWasPressed:" destination="BcS-Xs-TZn" eventType="touchUpInside" id="DJv-eF-6Og"/>
                                 </connections>
                             </button>
-                            <sceneKitView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" restorationIdentifier="sceneView" allowsCameraControl="YES" autoenablesDefaultLighting="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Gj0-Lt-IZB" userLabel="sceneView">
+                            <sceneKitView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" restorationIdentifier="sceneView" autoenablesDefaultLighting="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Gj0-Lt-IZB" userLabel="sceneView">
                                 <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </sceneKitView>
@@ -309,6 +309,7 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="y9g-Or-oQk"/>
+                    <simulatedOrientationMetrics key="simulatedOrientationMetrics"/>
                     <connections>
                         <outlet property="backToLobbyButton" destination="QgQ-jQ-xTk" id="kOV-7R-35N"/>
                         <outlet property="debugCrashButton" destination="nra-nb-w5E" id="fnl-ql-hrv"/>
