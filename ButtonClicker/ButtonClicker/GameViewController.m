@@ -193,6 +193,14 @@
     id url = [NSURL fileURLWithPath:urlPath];
     SCNScene* scene = [SCNScene sceneWithURL:url options:nil error:nil];
     NSLog(@"%@", [scene.rootNode description]);
+    SCNNode* voltronNode = [SCNNode node];
+    NSArray* childNodes = scene.rootNode.childNodes;
+    for (SCNNode* node in childNodes) {
+        [node removeFromParentNode];
+        [voltronNode addChildNode:node];
+    }
+    [scene.rootNode addChildNode:voltronNode];
+    voltronNode.position = SCNVector3Make(voltronNode.position.x - 50, voltronNode.position.y, voltronNode.position.z);
     
     SCNCamera* camera = [SCNCamera camera];
     camera.usesOrthographicProjection = true;
