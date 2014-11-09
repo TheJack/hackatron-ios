@@ -36,8 +36,11 @@
 @property (strong) CMMotionManager* manager;
 @property (strong) NSOperationQueue* queue;
 @property (strong) CMDeviceMotionHandler handler;
+@property (strong) SCNNode* voltronNode;
 
 @property float firstRenderTime;
+@property float lastRenderTime;
+@property float movementX;
 
 @end
 
@@ -161,17 +164,17 @@
     world.contactDelegate = self;
     
     NSLog(@"%@", [scene.rootNode description]);
-    SCNNode* voltronNode = [SCNNode node];
+    self.voltronNode = [SCNNode node];
     NSArray* childNodes = scene.rootNode.childNodes;
     for (SCNNode* node in childNodes) {
         [node removeFromParentNode];
-        [voltronNode addChildNode:node];
+        [self.voltronNode addChildNode:node];
     }
-    [scene.rootNode addChildNode:voltronNode];
+    [scene.rootNode addChildNode:self.voltronNode];
     // negative on x moves right, positive moves left
-    voltronNode.position = SCNVector3Make(voltronNode.position.x - 0, voltronNode.position.y, voltronNode.position.z);
-    voltronNode.physicsBody = [SCNPhysicsBody bodyWithType:SCNPhysicsBodyTypeKinematic shape:[SCNPhysicsShape shapeWithNode:voltronNode options:nil]];
-    voltronNode.name = @"voltron";
+    self.voltronNode.position = SCNVector3Make(self.voltronNode.position.x - 0, self.voltronNode.position.y, self.voltronNode.position.z);
+    self.voltronNode.physicsBody = [SCNPhysicsBody bodyWithType:SCNPhysicsBodyTypeKinematic shape:[SCNPhysicsShape shapeWithNode:self.voltronNode options:nil]];
+    self.voltronNode.name = @"voltron";
     
     SCNCamera* camera = [SCNCamera camera];
     camera.usesOrthographicProjection = true;
@@ -179,7 +182,7 @@
     camera.zNear = 0;
     camera.zFar = 1000;
     SCNNode* cameraNode = [SCNNode node];
-    cameraNode.position = SCNVector3Make(0, 0, 50);
+    cameraNode.position = SCNVector3Make(0, 0, 200);
     cameraNode.camera = camera;
     SCNNode* cameraOrbit = [SCNNode node];
     [cameraOrbit addChildNode:cameraNode];
@@ -192,16 +195,25 @@
     
     self.sceneView.scene = scene;
     
+    __weak typeof(self) weakSelf = self;
     self.manager = [[CMMotionManager alloc] init];
     self.queue = [[NSOperationQueue alloc] init];
     self.manager.deviceMotionUpdateInterval = 0.05;
     self.handler = ^ (CMDeviceMotion* motion, NSError* error) {
 //        NSLog(@"%f %f %f", motion.rotationRate.x, motion.rotationRate.y, motion.rotationRate.z);
-        NSLog(@"%f %f %f", motion.attitude.roll, motion.attitude.pitch, motion.attitude.yaw);
+//        NSLog(@"%f %f YAWWW: %f", motion.attitude.roll, motion.attitude.pitch, motion.attitude.yaw);
         if (fabs(M_PI + motion.attitude.yaw * 4 - cameraOrbit.eulerAngles.y) < 1e-3) {
 //            return;
         }
         cameraOrbit.eulerAngles = SCNVector3Make(cameraOrbit.eulerAngles.x, M_PI + motion.attitude.roll * 2, cameraOrbit.eulerAngles.z);
+        
+        if (motion.attitude.yaw > 0.2) {
+            weakSelf.movementX = 100;
+        } else if (motion.attitude.yaw < -0.2) {
+            weakSelf.movementX = -100;
+        } else {
+            weakSelf.movementX = 0;
+        }
 //        cameraOrbit.eulerAngles.y += motion.rotationRate.y
     };
     [self.manager startDeviceMotionUpdatesToQueue:self.queue withHandler:self.handler];
@@ -210,6 +222,8 @@
     
     [self.sceneView play:nil];
     self.firstRenderTime = -1;
+    self.lastRenderTime = 0;
+    self.movementX = 0;
 }
 
 - (void)renderer:(id<SCNSceneRenderer>)aRenderer updateAtTime:(NSTimeInterval)time {
@@ -218,14 +232,18 @@
     }
     time -= self.firstRenderTime;
     float stoneTime = 5;
-    float x = 0;
+    float x = 20;
 //    float x = arc4random_uniform(20) - 10;
     float y = 200;
     float z = 0;
     float dx = 0;
     float dy = -40;
     int stoneId = 0;
-    NSLog(@"wtf");
+//    NSLog(@"wtf");
+    float newX = self.voltronNode.position.x + (time - self.lastRenderTime) * self.movementX;
+    newX = MIN(newX, 100);
+    newX = MAX(newX, -100);
+    self.voltronNode.position = SCNVector3Make(newX, self.voltronNode.position.y, self.voltronNode.position.z);
     if (time > stoneTime) {
         SCNNode* rootNode = self.sceneView.scene.rootNode;
         NSString* nodeName = [NSString stringWithFormat:@"stone%d", stoneId];
@@ -244,6 +262,7 @@
             [self.sceneView.scene.rootNode addChildNode:node];
         }
     }
+    self.lastRenderTime = time;
 }
 
 - (void) physicsWorld:(SCNPhysicsWorld *)world didBeginContact:(SCNPhysicsContact *)contact {

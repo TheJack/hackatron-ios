@@ -149,6 +149,8 @@ fromParticipant:(GPGRealTimeParticipant *)participant
   unsigned char instruction;
   [data getBytes:&instruction length:sizeof(unsigned char)];
   int bufferIndex = sizeof(unsigned char);
+    NSLog(@"received data");
+    NSLog(@"%@", data);
 
   if (instruction == 'U' || instruction == 'F') {
     Byte score;
