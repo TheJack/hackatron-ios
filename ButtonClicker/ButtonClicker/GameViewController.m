@@ -193,6 +193,13 @@
     SCNNode* arm = [scene.rootNode childNodeWithName:@"Bone003" recursively:YES];
     arm.eulerAngles = SCNVector3Make(arm.eulerAngles.x, arm.eulerAngles.y + M_PI, arm.eulerAngles.z);
     
+    NSString* imageUrl = [bundle pathForResource:@"stars" ofType:@"jpg"];
+    CGDataProviderRef dataProvider = CGDataProviderCreateWithFilename([imageUrl UTF8String]);
+    CGImageRef image = CGImageCreateWithJPEGDataProvider(dataProvider, NULL, NO, kCGRenderingIntentDefault);
+//    id name = @"ButtonClicker/stars.jpg";
+    scene.background.contents = (__bridge id)image;
+    
+    
     self.sceneView.scene = scene;
     
     __weak typeof(self) weakSelf = self;
@@ -231,7 +238,7 @@
         self.firstRenderTime = time;
     }
     time -= self.firstRenderTime;
-    float stoneTime = 5;
+    float stoneTime = 20;
     float x = 20;
 //    float x = arc4random_uniform(20) - 10;
     float y = 200;

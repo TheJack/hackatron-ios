@@ -10,6 +10,7 @@
 		28595943198AC8C30071670D /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28595942198AC8C30071670D /* CoreTelephony.framework */; };
 		28595945198AC8D10071670D /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 28595944198AC8D10071670D /* libz.dylib */; };
 		2C67FA1A1A0EDAE000D093F7 /* robot with bones.dae in Resources */ = {isa = PBXBuildFile; fileRef = 2C67FA191A0EDAE000D093F7 /* robot with bones.dae */; };
+		2C864BE91A0FC7E6008A64EE /* stars.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2C864BE81A0FC7E6008A64EE /* stars.jpg */; };
 		2CFD4C541A0EBC5B00E87608 /* robot-old.dae in Resources */ = {isa = PBXBuildFile; fileRef = 2CFD4C531A0EBC5A00E87608 /* robot-old.dae */; };
 		2CFD4C561A0ECA6E00E87608 /* robot3.dae in Resources */ = {isa = PBXBuildFile; fileRef = 2CFD4C551A0ECA6E00E87608 /* robot3.dae */; };
 		491B8C361865084E0061D71C /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 491B8C351865084E0061D71C /* AddressBook.framework */; };
@@ -63,6 +64,7 @@
 		28595942198AC8C30071670D /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		28595944198AC8D10071670D /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		2C67FA191A0EDAE000D093F7 /* robot with bones.dae */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml.dae; path = "robot with bones.dae"; sourceTree = "<group>"; };
+		2C864BE81A0FC7E6008A64EE /* stars.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = stars.jpg; sourceTree = "<group>"; };
 		2CFD4C531A0EBC5A00E87608 /* robot-old.dae */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml.dae; path = "robot-old.dae"; sourceTree = "<group>"; };
 		2CFD4C551A0ECA6E00E87608 /* robot3.dae */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml.dae; path = robot3.dae; sourceTree = "<group>"; };
 		491B8C351865084E0061D71C /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
@@ -204,6 +206,7 @@
 		49D817A218567206008B9FD9 /* ButtonClicker */ = {
 			isa = PBXGroup;
 			children = (
+				2C864BE81A0FC7E6008A64EE /* stars.jpg */,
 				2C67FA191A0EDAE000D093F7 /* robot with bones.dae */,
 				2CFD4C551A0ECA6E00E87608 /* robot3.dae */,
 				2CFD4C531A0EBC5A00E87608 /* robot-old.dae */,
@@ -341,6 +344,7 @@
 				49D7688D18CBBBB5007FDE22 /* GooglePlus.bundle in Resources */,
 				2CFD4C541A0EBC5B00E87608 /* robot-old.dae in Resources */,
 				49D817B018567206008B9FD9 /* Main.storyboard in Resources */,
+				2C864BE91A0FC7E6008A64EE /* stars.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
