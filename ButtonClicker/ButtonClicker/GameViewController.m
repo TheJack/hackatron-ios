@@ -45,6 +45,8 @@
 @property (strong) NSOperationQueue* queue;
 @property (strong) CMDeviceMotionHandler handler;
 
+@property float firstRenderTime;
+
 @end
 
 @implementation GameViewController
@@ -197,6 +199,11 @@
     id urlPath = [bundle pathForResource:@"robot with bones" ofType:@"dae"];
     id url = [NSURL fileURLWithPath:urlPath];
     SCNScene* scene = [SCNScene sceneWithURL:url options:nil error:nil];
+    
+    
+    SCNPhysicsWorld* world = scene.physicsWorld;
+    world.contactDelegate = self;
+    
     NSLog(@"%@", [scene.rootNode description]);
     SCNNode* voltronNode = [SCNNode node];
     NSArray* childNodes = scene.rootNode.childNodes;
@@ -207,10 +214,12 @@
     [scene.rootNode addChildNode:voltronNode];
     // negative on x moves right, positive moves left
     voltronNode.position = SCNVector3Make(voltronNode.position.x - 0, voltronNode.position.y, voltronNode.position.z);
+    voltronNode.physicsBody = [SCNPhysicsBody bodyWithType:SCNPhysicsBodyTypeKinematic shape:[SCNPhysicsShape shapeWithNode:voltronNode options:nil]];
+    voltronNode.name = @"voltron";
     
     SCNCamera* camera = [SCNCamera camera];
     camera.usesOrthographicProjection = true;
-    camera.orthographicScale = 100;
+    camera.orthographicScale = 140;
     camera.zNear = 0;
     camera.zFar = 1000;
     SCNNode* cameraNode = [SCNNode node];
@@ -241,9 +250,68 @@
     };
     [self.manager startDeviceMotionUpdatesToQueue:self.queue withHandler:self.handler];
     
+    self.sceneView.delegate = self;
     
     [self.sceneView play:nil];
+    self.firstRenderTime = -1;
 }
+
+- (void)renderer:(id<SCNSceneRenderer>)aRenderer updateAtTime:(NSTimeInterval)time {
+    if (self.firstRenderTime == -1) {
+        self.firstRenderTime = time;
+    }
+    time -= self.firstRenderTime;
+    float stoneTime = 5;
+    float x = 0;
+    float y = 200;
+    float z = 0;
+    float dx = 0;
+    float dy = -40;
+    int stoneId = 0;
+    NSLog(@"wtf");
+    if (time > stoneTime) {
+        SCNNode* rootNode = self.sceneView.scene.rootNode;
+        NSString* nodeName = [NSString stringWithFormat:@"stone%d", stoneId];
+        SCNNode* node = [rootNode childNodeWithName:nodeName recursively:true];
+        BOOL found = node;
+        if (!node) {
+            node = [SCNNode node];
+            node.geometry = [SCNSphere sphereWithRadius:8];
+            node.name = nodeName;
+            node.physicsBody = [SCNPhysicsBody kinematicBody];
+        }
+        node.position = SCNVector3Make(x + (time - stoneTime) * dx, y + (time - stoneTime) * dy, z);
+        
+//        node.position = SCNVector3Make(0, 0, 0);
+        if (!found) {
+            [self.sceneView.scene.rootNode addChildNode:node];
+        }
+    }
+}
+
+- (void) physicsWorld:(SCNPhysicsWorld *)world didBeginContact:(SCNPhysicsContact *)contact {
+    NSLog(@"collision");
+    SCNNode* a = contact.nodeA;
+    SCNNode* b = contact.nodeB;
+    int stones = 0;
+    if ([a.name containsString:@"stone"]) {
+        ++stones;
+    }
+    if ([b.name containsString:@"stone"]) {
+        ++stones;
+    }
+    if (stones == 1) {
+        SCNNode* voltron;
+        if ([a.name containsString:@"stone"]) {
+            voltron = b;
+        } else {
+            voltron = a;
+        }
+        voltron.hidden = true;
+        
+    }
+}
+
 
 - (void)didReceiveMemoryWarning {
   [super didReceiveMemoryWarning];

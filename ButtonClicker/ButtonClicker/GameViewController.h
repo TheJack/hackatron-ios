@@ -19,6 +19,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface GameViewController : UIViewController
+@import SceneKit;
+
+@interface GameViewController : UIViewController <SCNNodeRendererDelegate, SCNPhysicsContactDelegate>
 
 @end

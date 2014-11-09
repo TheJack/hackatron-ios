@@ -12,22 +12,34 @@
 	<dict>
 		<key>453B7DEE3E5FA95899665DA5102C8699AB83D603</key>
 		<string>github.com:playgameservices/ios-basic-samples.git</string>
+		<key>B4DF05C61DB3E594E85EBB4B78D484E497A7B7AB</key>
+		<string>github.com:TheJack/hackatron-ios.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>ButtonClicker/ButtonClicker.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>453B7DEE3E5FA95899665DA5102C8699AB83D603</key>
+		<string>../../../../ios-basic-samples</string>
+		<key>B4DF05C61DB3E594E85EBB4B78D484E497A7B7AB</key>
 		<string>../../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>github.com:playgameservices/ios-basic-samples.git</string>
+	<string>github.com:TheJack/hackatron-ios.git</string>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>453B7DEE3E5FA95899665DA5102C8699AB83D603</string>
+	<string>B4DF05C61DB3E594E85EBB4B78D484E497A7B7AB</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>B4DF05C61DB3E594E85EBB4B78D484E497A7B7AB</string>
+			<key>IDESourceControlWCCName</key>
+			<string>hackatron-ios</string>
+		</dict>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
