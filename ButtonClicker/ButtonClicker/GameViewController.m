@@ -21,6 +21,7 @@
 #import "GameModel.h"
 #import "MPManager.h"
 #import "ButtonClickerPlayer.h"
+#include "stdlib.h"
 
 @import CoreMotion;
 @import SceneKit;
@@ -29,16 +30,7 @@
   NSArray *_scoreboardViews;
 }
 @property(nonatomic) GameModel *model;
-@property (weak, nonatomic) IBOutlet UIButton *backToLobbyButton;
-@property (weak, nonatomic) IBOutlet UIButton *debugCrashButton;
-@property (weak, nonatomic) IBOutlet UIButton *debugLeaveButton;
-@property (weak, nonatomic) IBOutlet UILabel *statusLabel;
 @property(nonatomic, weak) NSTimer *updateTimer;
-@property(weak, nonatomic) IBOutlet UILabel *timeLeftLabel;
-@property (weak, nonatomic) IBOutlet UIView *scoreBG1;
-@property (weak, nonatomic) IBOutlet UIView *scoreBG2;
-@property (weak, nonatomic) IBOutlet UIView *scoreBG3;
-@property (weak, nonatomic) IBOutlet UIView *scoreBG4;
 @property (weak, nonatomic) IBOutlet SCNView* sceneView;
 
 @property (strong) CMMotionManager* manager;
@@ -112,40 +104,6 @@
 }
 
 - (void)updateInterface {
-  self.timeLeftLabel.text = [NSString stringWithFormat:@":%02d", (int) round(self.model.timeLeft)];
-  NSArray *scores = [self.model getListOfPlayersSortedByScore];
-
-  // We're going to bottom-align these things
-  int currentRow = 4 - (int)scores.count;
-  for (ButtonClickerPlayer *player in scores) {
-    // Poor mans table view
-    UIView *scoreBG = _scoreboardViews[currentRow];
-    scoreBG.hidden = NO;
-    ((UILabel *)scoreBG.subviews[0]).text = player.displayName;
-    ((UILabel *)scoreBG.subviews[1]).text =
-        [self formatScore:player.score isFinal:player.scoreIsFinal];
-    currentRow++;
-  }
-
-  switch (self.model.gameState) {
-    case BCGameStateWaitingToStart:
-      self.statusLabel.text = @"Waiting...";
-      break;
-    case BCGameStatePlaying:
-      self.statusLabel.text = @"CLICK!!";
-      break;
-    case BCGameStateWaitingToFinish:
-      self.statusLabel.text = @"Waiting for final results";
-      break;
-    case BCGameStateDone:
-      self.statusLabel.text = @"Finished!";
-      self.backToLobbyButton.hidden = NO;
-      self.debugCrashButton.hidden = YES;
-      self.debugLeaveButton.hidden = YES;
-      break;
-    default:
-      break;
-  }
 }
 
 - (void)updateInterfaceFromTimer:(NSTimer *)timer {
@@ -175,7 +133,6 @@
     hideMe.hidden = YES;
   }
   [self.navigationController setNavigationBarHidden:YES animated:YES];
-  self.backToLobbyButton.hidden = YES;
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -189,7 +146,6 @@
 
   // TODO: Look into just making this my model, since all I'm doing now is redirecting calls.
   [[MPManager sharedInstance] setGameDelegate:self];
-  _scoreboardViews = @[ self.scoreBG1, self.scoreBG2, self.scoreBG3, self.scoreBG4 ];
 
   // We'll just start for now
   [self startGame];
@@ -263,6 +219,7 @@
     time -= self.firstRenderTime;
     float stoneTime = 5;
     float x = 0;
+//    float x = arc4random_uniform(20) - 10;
     float y = 200;
     float z = 0;
     float dx = 0;
