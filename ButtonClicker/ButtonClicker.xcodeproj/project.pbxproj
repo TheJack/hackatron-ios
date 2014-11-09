@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		28595943198AC8C30071670D /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28595942198AC8C30071670D /* CoreTelephony.framework */; };
 		28595945198AC8D10071670D /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 28595944198AC8D10071670D /* libz.dylib */; };
+		2C67FA1A1A0EDAE000D093F7 /* robot with bones.dae in Resources */ = {isa = PBXBuildFile; fileRef = 2C67FA191A0EDAE000D093F7 /* robot with bones.dae */; };
+		2CFD4C541A0EBC5B00E87608 /* robot-old.dae in Resources */ = {isa = PBXBuildFile; fileRef = 2CFD4C531A0EBC5A00E87608 /* robot-old.dae */; };
+		2CFD4C561A0ECA6E00E87608 /* robot3.dae in Resources */ = {isa = PBXBuildFile; fileRef = 2CFD4C551A0ECA6E00E87608 /* robot3.dae */; };
 		491B8C361865084E0061D71C /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 491B8C351865084E0061D71C /* AddressBook.framework */; };
 		49439A591858DFA700A6DCF3 /* MPManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 49439A581858DFA700A6DCF3 /* MPManager.m */; };
 		494EB07F185F7C9400A93A4B /* ButtonClickerPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 494EB07E185F7C9400A93A4B /* ButtonClickerPlayer.m */; };
@@ -59,6 +62,9 @@
 /* Begin PBXFileReference section */
 		28595942198AC8C30071670D /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		28595944198AC8D10071670D /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		2C67FA191A0EDAE000D093F7 /* robot with bones.dae */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml.dae; path = "robot with bones.dae"; sourceTree = "<group>"; };
+		2CFD4C531A0EBC5A00E87608 /* robot-old.dae */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml.dae; path = "robot-old.dae"; sourceTree = "<group>"; };
+		2CFD4C551A0ECA6E00E87608 /* robot3.dae */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml.dae; path = robot3.dae; sourceTree = "<group>"; };
 		491B8C351865084E0061D71C /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		49439A571858DFA700A6DCF3 /* MPManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPManager.h; sourceTree = "<group>"; };
 		49439A581858DFA700A6DCF3 /* MPManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPManager.m; sourceTree = "<group>"; };
@@ -198,6 +204,9 @@
 		49D817A218567206008B9FD9 /* ButtonClicker */ = {
 			isa = PBXGroup;
 			children = (
+				2C67FA191A0EDAE000D093F7 /* robot with bones.dae */,
+				2CFD4C551A0ECA6E00E87608 /* robot3.dae */,
+				2CFD4C531A0EBC5A00E87608 /* robot-old.dae */,
 				49D817AB18567206008B9FD9 /* AppDelegate.h */,
 				49D817AC18567206008B9FD9 /* AppDelegate.m */,
 				494EB07D185F7C9400A93A4B /* ButtonClickerPlayer.h */,
@@ -325,9 +334,12 @@
 			files = (
 				4995C54B18626F29008537F7 /* README.md in Resources */,
 				49D817B518567206008B9FD9 /* Images.xcassets in Resources */,
+				2C67FA1A1A0EDAE000D093F7 /* robot with bones.dae in Resources */,
 				49D817A718567206008B9FD9 /* InfoPlist.strings in Resources */,
+				2CFD4C561A0ECA6E00E87608 /* robot3.dae in Resources */,
 				49D7688B18CBBBB5007FDE22 /* GooglePlayGames.bundle in Resources */,
 				49D7688D18CBBBB5007FDE22 /* GooglePlus.bundle in Resources */,
+				2CFD4C541A0EBC5B00E87608 /* robot-old.dae in Resources */,
 				49D817B018567206008B9FD9 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

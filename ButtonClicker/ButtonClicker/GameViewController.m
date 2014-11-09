@@ -82,7 +82,15 @@
                                                     selector:@selector(updateInterfaceFromTimer:)
                                                     userInfo:nil
                                                      repeats:YES];
-
+    
+    
+    /*         let bundle = NSBundle.mainBundle()
+     let paths = bundle.pathsForResourcesOfType("dae", inDirectory: "")
+     let url = bundle.pathForResource("robot-old", ofType: "dae")
+     //        NSLog(bundle.pathForResource("robot", ofType: "DAE")!)
+     
+     let scene = SCNScene(URL: NSURL(fileURLWithPath: url!)!, options: nil, error: nil)
+     */
 
 }
 
@@ -178,6 +186,33 @@
 
   // We'll just start for now
   [self startGame];
+    
+    
+    NSBundle* bundle = [NSBundle mainBundle];
+    id urlPath = [bundle pathForResource:@"robot with bones" ofType:@"dae"];
+    id url = [NSURL fileURLWithPath:urlPath];
+    SCNScene* scene = [SCNScene sceneWithURL:url options:nil error:nil];
+    NSLog(@"%@", [scene.rootNode description]);
+    
+    SCNCamera* camera = [SCNCamera camera];
+    camera.usesOrthographicProjection = true;
+    camera.orthographicScale = 100;
+    camera.zNear = 0;
+    camera.zFar = 1000;
+    SCNNode* cameraNode = [SCNNode node];
+    cameraNode.position = SCNVector3Make(0, 0, 50);
+    cameraNode.camera = camera;
+    SCNNode* cameraOrbit = [SCNNode node];
+    [cameraOrbit addChildNode:cameraNode];
+    [scene.rootNode addChildNode:cameraOrbit];
+    SCNVector3 angles = cameraOrbit.eulerAngles;
+    cameraOrbit.eulerAngles = SCNVector3Make(angles.x, angles.y + M_PI, angles.z);
+    
+    SCNNode* arm = [scene.rootNode childNodeWithName:@"Bone003" recursively:YES];
+    arm.eulerAngles = SCNVector3Make(arm.eulerAngles.x, arm.eulerAngles.y + M_PI, arm.eulerAngles.z);
+    
+    self.sceneView.scene = scene;
+    [self.sceneView play:nil];
 }
 
 - (void)didReceiveMemoryWarning {
